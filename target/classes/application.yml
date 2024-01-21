@@ -1,0 +1,10 @@
+#future la ennellam override pannuvamo athellam ithukka thaan poduvam
+server:
+  port: 9090
+#
+#or
+#
+spring.profiles.active: prod,stage,qa,dev
+#pinnukkirunthu thaan check pannum onnu illaddi aduththatha paakkum
+#naama ithu ellathayum ore resources la vaikkaama veliya purumpa vaikkalaam and application.yml parent ah irukkum
+#debug: true
