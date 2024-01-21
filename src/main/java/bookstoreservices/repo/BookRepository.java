@@ -1,7 +1,9 @@
 package bookstoreservices.repo;
 
 import bookstoreservices.entity.Book;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -55,4 +57,14 @@ import java.util.Set;
 public interface BookRepository extends CrudRepository<Book, Integer> {
 
    List<Book> findAllByYearOfPublicationInAndBookType(Set<Integer> yop,String bookType);
+
+   Long countByBookType(String bookType);
+
+      String rawQuery="select * from book where year_of_publication IN ?1";//muthalaam parameter endaramaari
+      @Query(nativeQuery = true,value=rawQuery)
+      List<Book> findAllByYearOfPublicationIn(Set<Integer> yop);
+
+//   String rawQuery="select * from book where year_of_publication IN :yop";
+//   @Query(nativeQuery = true,value=rawQuery)
+//   List<Book> findAllByYearOfPublicationIn(@Param("yop") Set<Integer> yop);
 }

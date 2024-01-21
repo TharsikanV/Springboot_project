@@ -60,4 +60,8 @@ public class BookController {
         return bookService.deleteBookById(bookId);
     }
 
+    @GetMapping("/raw/books")//ipdyum seyyalaam  ithula method define pannathevalla
+    public List<Book> getBooksByRawQuery(@RequestParam(value = "yop") Set<Integer> yop){
+        return bookService.getBooksByRawQuery(yop);
+    }
 }
