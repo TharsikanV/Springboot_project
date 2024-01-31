@@ -1,5 +1,6 @@
 package bookstoreservices.controller;
 
+import bookstoreservices.dto.BookDTO;
 import bookstoreservices.entity.Book;
 import bookstoreservices.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +46,10 @@ public class BookController {
     }
 
     @RequestMapping(value="/books/{id}")
-    public Optional<Book> getBookById(@PathVariable("id") Integer bookId){ //@PathParam-/books?id=27
+    public Optional<BookDTO> getBookById(@PathVariable("id") Long bookId,
+                               @RequestParam(value = "authorData",required = false) boolean authorData){ //@PathParam-/books?id=27
 //mela path la ethaavathu oru variable "id" nnu iruntha atha bookId kku eduthukka solluran
-        return bookService.getBookById(bookId);
+        return bookService.getBookById(bookId,authorData);
     }
 
     @RequestMapping(value="/books",method = RequestMethod.PUT)
@@ -56,7 +58,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "/books/{bookId}",method = RequestMethod.DELETE)
-    public String deleteBookById(@PathVariable Integer bookId){
+    public String deleteBookById(@PathVariable Long bookId){
         return bookService.deleteBookById(bookId);
     }
 

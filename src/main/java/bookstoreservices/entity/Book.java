@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Book {
     @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)//hibernate check pannum table ah ithu auto genaartela irukkannu
-    private Integer id;
+    private Long id;
     private String name;
 
     @Column(name = "description") //db column yum entity class oda column ayum match pannikkum
@@ -18,19 +18,19 @@ public class Book {
     public Book(){
 
     }//default constructor kodukkanum
-    public Book(Integer id, String name, String desc, Integer yearOfPublication, String bookType) {
+    public Book(Long id, String name, String desc, Integer yearOfPublication, String bookType) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.yearOfPublication = yearOfPublication;
         this.bookType = bookType;
     }
-    public Integer getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

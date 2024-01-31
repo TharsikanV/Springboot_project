@@ -54,7 +54,7 @@ import java.util.Set;
 //
 ////////////////////////vithu///////////////
 @Repository
-public interface BookRepository extends CrudRepository<Book, Integer> {
+public interface BookRepository extends CrudRepository<Book, Long> {
 
    List<Book> findAllByYearOfPublicationInAndBookType(Set<Integer> yop,String bookType);
 
