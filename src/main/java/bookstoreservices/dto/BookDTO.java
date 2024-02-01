@@ -1,6 +1,7 @@
 package bookstoreservices.dto;
 
 import bookstoreservices.entity.Author;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class BookDTO {
     private String bookType;
 
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<AuthorDTO> authors;//because enakku createdAT,UpdatedAt venaam
 
     public Long getId() {

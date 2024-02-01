@@ -1,5 +1,6 @@
 package bookstoreservices.controller;
 
+import bookstoreservices.common.APIResponse;
 import bookstoreservices.dto.BookDTO;
 import bookstoreservices.entity.Book;
 import bookstoreservices.service.BookService;
@@ -63,7 +64,12 @@ public class BookController {
     }
 
     @GetMapping("/raw/books")//ipdyum seyyalaam  ithula method define pannathevalla
-    public List<Book> getBooksByRawQuery(@RequestParam(value = "yop") Set<Integer> yop){
+    public APIResponse getBooksByRawQuery(@RequestParam(value = "yop") Set<Integer> yop){
         return bookService.getBooksByRawQuery(yop);
+    }
+
+    @GetMapping("/caughtException")//ipdyum seyyalaam  ithula method define pannathevalla
+    public APIResponse getCaughtException(@RequestParam(value = "number") Integer yop){
+        return bookService.getCaughtException(yop);
     }
 }

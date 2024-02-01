@@ -1,5 +1,7 @@
 package bookstoreservices.service;
 
+import bookstoreservices.common.APIResponse;
+import bookstoreservices.data.BookData;
 import bookstoreservices.dto.AuthorDTO;
 import bookstoreservices.dto.BookDTO;
 import bookstoreservices.entity.Author;
@@ -10,10 +12,7 @@ import bookstoreservices.repo.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class BookService {
@@ -123,9 +122,30 @@ public List<Book> getBooks(Set<Integer> yop,String bookType){
     }
 
     //raw query -get books
-    public List<Book> getBooksByRawQuery(Set<Integer> yop) {
-       List<Book> BookList= bookRepository.findAllByYearOfPublicationIn(yop);
-        return BookList;
+    public APIResponse getBooksByRawQuery(Set<Integer> yop) {
+        APIResponse apiResponse=new APIResponse();
+        //db call
+        List<Book> BookList= bookRepository.findAllByYearOfPublicationIn(yop);
+//
+//       Map data=new HashMap();
+//       data.put("books",BookList);
+//       //object ah tharum
+
+        //set data
+        BookData bookData=new BookData();
+        bookData.setBooks(BookList);
+
+        //set api response
+       apiResponse.setData(bookData);
+        return apiResponse;
+    }
+
+    public APIResponse getCaughtException(Integer yop) {
+
+        int result=100/yop;
+        APIResponse response=new APIResponse();
+        response.setData(result);
+        return response;
     }
     //50 varai irukku
 }
