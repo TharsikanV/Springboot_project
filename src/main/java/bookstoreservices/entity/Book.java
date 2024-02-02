@@ -61,7 +61,7 @@ public class Book {
 
 
     public void setBookType(String bookType) {
-        bookType = bookType;
+        this.bookType = bookType;
     }
 
     public String getBookType() {

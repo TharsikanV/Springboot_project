@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.data.web.SortHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,11 +15,17 @@ import java.util.List;
 @Configuration
 public class CustomWebConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        PageableHandlerMethodArgumentResolver pageResolver=new PageableHandlerMethodArgumentResolver();
+        //sort
+        SortHandlerMethodArgumentResolver sortResolver=new SortHandlerMethodArgumentResolver();
+        sortResolver.setSortParameter("order-by");
+
+        //page
+        PageableHandlerMethodArgumentResolver pageResolver=new PageableHandlerMethodArgumentResolver(sortResolver);
         pageResolver.setPageParameterName("page-number");
         pageResolver.setSizeParameterName("page-size");
         pageResolver.setOneIndexedParameters(true);//1 index la irunthu paraameter  kudukkalaam
 
+//        Pageable.ofSize(5);
         Pageable defaultPageable= PageRequest.of(0, 5);
         pageResolver.setFallbackPageable(defaultPageable);
 

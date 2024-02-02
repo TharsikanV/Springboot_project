@@ -36,4 +36,22 @@ public class AuthorService {
         return apiResponse;
     }
 
+    public APIResponse getAuthorsWithNamedQuery(Pageable pageable) {
+        APIResponse apiResponse=new APIResponse();
+
+        //make db call to get authors
+        Page<Author> authorPage=authorRepository.findAllByOrderByIdDesc(pageable);//pagenation kku
+                                                //intha sortingthaan irukkum vera enna sorting add pannaalum maarathu
+
+        List<Author> authors=authorPage.getContent();
+
+        PaginationMeta authorPaginationMeta=PaginationMeta.createPagination(authorPage);
+
+        AuthorData authorData=new AuthorData();
+        authorData.setAuthors(authors);
+        authorData.setPagination(authorPaginationMeta);
+        apiResponse.setData(authorData);
+
+        return apiResponse;
+    }
 }
