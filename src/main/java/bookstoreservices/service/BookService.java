@@ -1,6 +1,8 @@
 package bookstoreservices.service;
 
 import bookstoreservices.common.APIResponse;
+import bookstoreservices.common.BadRequestException;
+import bookstoreservices.common.Error;
 import bookstoreservices.data.BookData;
 import bookstoreservices.dto.AuthorDTO;
 import bookstoreservices.dto.BookDTO;
@@ -9,6 +11,7 @@ import bookstoreservices.entity.Book;
 import bookstoreservices.entity.BookAuthor;
 import bookstoreservices.repo.BookAuthorRepository;
 import bookstoreservices.repo.BookRepository;
+import bookstoreservices.validator.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ private BookRepository bookRepository;
 
 @Autowired
 private BookAuthorRepository bookAuthorRepository;
+
+@Autowired
+private BookValidator bookValidator;
 //   Get
 //    public List<Book> getBooks(Set<Integer> yop,String bookType){
 //
@@ -56,6 +62,14 @@ public List<Book> getBooks(Set<Integer> yop,String bookType){
     //Create
     public Book createBook(Book book){
 
+        //validation
+       List<Error> errors=bookValidator.validateCreateBookRequest(book);
+        //if not success
+        if(errors.size()>0){
+            throw new BadRequestException("bad request",errors);
+        }
+
+        //if success
         return bookRepository.save(book);
     }
 
