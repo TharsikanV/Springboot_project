@@ -6,6 +6,7 @@ import bookstoreservices.common.Error;
 import bookstoreservices.data.BookData;
 import bookstoreservices.dto.AuthorDTO;
 import bookstoreservices.dto.BookDTO;
+import bookstoreservices.dto.BookQueryDslDTO;
 import bookstoreservices.entity.Author;
 import bookstoreservices.entity.Book;
 import bookstoreservices.entity.BookAuthor;
@@ -160,6 +161,18 @@ public List<Book> getBooks(Set<Integer> yop,String bookType){
         APIResponse response=new APIResponse();
         response.setData(result);
         return response;
+    }
+
+    public APIResponse getBooksByQueryDsl(Integer year) {
+        APIResponse apiResponse=new APIResponse();
+        //repo to get the result
+//       List<Book>bookList= bookRepository.getAllBooksByQueryDsl(year);
+//       apiResponse.setData(bookList);
+
+       List<BookQueryDslDTO> bookQueryDslDTOS=bookRepository.getAllBooksByQueryDslDto(year);
+        apiResponse.setData(bookQueryDslDTOS);
+        //return
+        return apiResponse;
     }
     //50 varai irukku
 }
