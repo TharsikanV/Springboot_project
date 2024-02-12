@@ -3,7 +3,6 @@ package bookstoreservices.repo;
 import bookstoreservices.dto.BookQueryDslDTO;
 import bookstoreservices.entity.Book;
 import bookstoreservices.entity.QBook;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.QBean;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -12,7 +11,6 @@ import jakarta.persistence.PersistenceContext;
 
 //import javax.persistence.EntityManager;
 //import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookRepositoryImpl implements BookRepositoryCustom {

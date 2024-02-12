@@ -1,17 +1,25 @@
 package bookstoreservices.service;
 
 import bookstoreservices.common.APIResponse;
+import bookstoreservices.dto.LoginRequestDTO;
 import bookstoreservices.dto.SignUpRequestDTO;
 import bookstoreservices.entity.User;
 import bookstoreservices.repo.UserRepository;
+import bookstoreservices.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class LoginService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtUtils jwtUtils;
+
     public APIResponse signUp(SignUpRequestDTO signUpRequestDTO) {
         APIResponse apiResponse=new APIResponse();
 
@@ -27,10 +35,42 @@ public class LoginService {
         userEntity.setPassword(signUpRequestDTO.getPassword());
 
         //store entity
-        userEntity=userRepository.save(userEntity);
+//        userEntity=userRepository.save(userEntity);
+        userEntity= userRepository.save(userEntity);
+
+
+        //generate jwt
+        String token=jwtUtils.generateJwt(userEntity);
+
+        Map<String,Object> data=new HashMap<>();
+        data.put("accessToken",token);
+
+        apiResponse.setData(data);
 
         //return
-        apiResponse.setData(userEntity);
+        return apiResponse;
+    }
+
+    public APIResponse login(LoginRequestDTO loginRequestDTO) {
+        APIResponse apiResponse=new APIResponse();
+        //validation
+
+        //verify user exist with given email and password
+        User user=userRepository.findOneByEmailIdIgnoreCaseAndPassword(loginRequestDTO.getEmailId(),loginRequestDTO.getPassword());
+
+        //response
+        if(user==null){
+            apiResponse.setData("User login faild");
+            return apiResponse;
+        }
+
+        //generate jwt
+        String token=jwtUtils.generateJwt(user);
+
+        Map<String,Object> data=new HashMap<>();
+        data.put("accessToken",token);
+        apiResponse.setData(data);
+
         return apiResponse;
     }
 }

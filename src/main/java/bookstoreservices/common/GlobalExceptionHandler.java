@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.nio.file.AccessDeniedException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -24,5 +26,12 @@ public class GlobalExceptionHandler {
         apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         apiResponse.setError(e.getErrors());
         return ResponseEntity.status(400).body(apiResponse);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity handleAccessDeniedException(Access_DeniedException e){
+        APIResponse apiResponse=new APIResponse();
+        apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 }
